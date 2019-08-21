@@ -11,3 +11,5 @@ X = table2array(X);
 y = table2array(y);
 
 y = 2 * y - 1;
+
+%% feature selection
