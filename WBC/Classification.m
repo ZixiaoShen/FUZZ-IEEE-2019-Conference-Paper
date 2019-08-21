@@ -46,12 +46,29 @@ acc_test = sum(test_pred == test_y)/num_test;
 % IFS
 [r_IFS, w_IFS] = infFS(train_X, train_y, 0.5, 1, 0);
 
-%% IFS + Classification Process
-acc_IFS = FS_CART(train, test, r_IFS);
+% IFS + CART Process
+acc_IFS_CART = FS_CART(train, test, r_IFS);
 
+% IFS + KNN Process
+acc_IFS_KNN = FS_KNN(train, test, r_IFS);
+
+% IFS + NB Process
+acc_IFS_NB = FS_NB(train, test, r_IFS);
+
+% IFS + SVM Process
+acc_IFS_SVM = FS_SVM(train, test, r_IFS);
+
+%% Plotting the results
 RemoveN = 0:num_F-1;
-h_IFS = plot(RemoveN, acc_IFS, 'LineWidth', 2);
+h_CART = plot(RemoveN, acc_IFS_CART, 'LineWidth', 2);
+hold on;
+h_KNN = plot(RemoveN, acc_IFS_KNN, 'LineWidth', 2);
+h_NB = plot(RemoveN, acc_IFS_NB, 'LineWidth', 2);
+h_SVM = plot(RemoveN, acc_IFS_SVM, 'LineWidth', 2);
+
+legend([h_CART, h_KNN, h_NB, h_SVM], 'IFS+CART', ...
+    'IFS+KNN', 'IFS+NB', 'IFS+SVM', 'location','SouthWest');
 xlabel('The number of the removed features');
 ylabel('Classification Accuracy');
-title('Comparison using CART in WBC');
-
+title('Comparison with IFS method in WBC');
+hold off;
