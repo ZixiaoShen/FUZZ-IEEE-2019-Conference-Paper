@@ -13,8 +13,9 @@ data = data(:, 2:11);
 clear NaN_Column NaN_Row
 
 %% set up X and y
-Vectors = 1:9;
-Target = 10;
+num_F = size(data, 2) - 1;
+Vectors = 1:num_F;
+Target = num_F + 1;
 
 X = data(:, Vectors);
 y = data(:, Target);
@@ -42,7 +43,15 @@ acc_train = sum(train_pred == train_y)/num_train;
 acc_test = sum(test_pred == test_y)/num_test;
 
 %% Feature Selection Process
-
 % IFS
 [r_IFS, w_IFS] = infFS(train_X, train_y, 0.5, 1, 0);
+
+%% IFS + Classification Process
+acc_IFS = FS_CART(train, test, r_IFS);
+
+RemoveN = 0:num_F-1;
+h_IFS = plot(RemoveN, acc_IFS, 'LineWidth', 2);
+xlabel('The number of the removed features');
+ylabel('Classification Accuracy');
+title('Comparison using CART in WBC');
 
