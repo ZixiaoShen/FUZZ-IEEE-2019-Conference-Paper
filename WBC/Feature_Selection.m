@@ -47,5 +47,3 @@ test_y = test(:, Target);
 
 %% 
 w_IFS_norm = mapminmax(w_IFS, 0, 1);
-
-
